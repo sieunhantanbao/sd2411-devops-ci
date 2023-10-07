@@ -9,19 +9,19 @@ void call(Map pipelineParams) {
 //========================================================================
 //========================================================================
 
-    stage ('Copy Dockerfiles to the source') {
-        script {
-            writeFile file: 'backend/Dockerfile.Backend', text: libraryResource('dev/docker/Dockerfile.Backend')
-            writeFile file: 'frontend/Dockerfile.Frontend', text: libraryResource('dev/docker/Dockerfile.Frontend')
-        }
-    }
+    // stage ('Copy Dockerfiles to the source') {
+    //     script {
+    //         writeFile file: 'backend/Dockerfile.Backend', text: libraryResource('dev/docker/Dockerfile.Backend')
+    //         writeFile file: 'frontend/Dockerfile.Frontend', text: libraryResource('dev/docker/Dockerfile.Frontend')
+    //     }
+    // }
 
     stage ("Build Backend") {
-        docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./backend/Dockerfile.Backend .")
+        docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./backend/Dockerfile .")
     }
 
     stage ("Build Frontend") {
-        docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./backend/Dockerfile.Frontend .")
+        docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./frontend/Dockerfile .")
     }
 
     stage ("Push Docker Images to ACR - backend") {
