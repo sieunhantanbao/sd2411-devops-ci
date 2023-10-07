@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-void call() {
+void call(Map pipelineParams) {
     String backend = "backend"
     String frontend = "frontend"
     String dockerRegistry = "acranhnguyens.azurecr.io"
