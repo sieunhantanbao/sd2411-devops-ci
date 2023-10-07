@@ -17,7 +17,7 @@ void call(Map pipelineParams) {
     // }
 
     stage ("Build Backend") {
-        docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f backend/Dockerfile .")
+        docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ${WORKSPACE}/backend/Dockerfile .")
     }
 
     stage ("Build Frontend") {
