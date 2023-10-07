@@ -17,6 +17,10 @@ void call(Map pipelineParams) {
     // }
 
     stage ("Build Backend") {
+        files = findFiles(glob: '*.*')
+        files.each { file ->
+            echo "File: ${file.toString()} +++"
+        }
         docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./backend/Dockerfile .")
     }
 
