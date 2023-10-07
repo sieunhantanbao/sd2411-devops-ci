@@ -17,11 +17,11 @@ void call(Map pipelineParams) {
     // }
 
     stage ("Build Backend") {
-        docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ${WORKSPACE}/backend/Dockerfile .")
+        docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./backend/Dockerfile .")
     }
 
     stage ("Build Frontend") {
-        docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ${WORKSPACE}/frontend/Dockerfile .")
+        docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f ./frontend/Dockerfile .")
     }
 
     stage ("Push Docker Images to ACR - backend") {
