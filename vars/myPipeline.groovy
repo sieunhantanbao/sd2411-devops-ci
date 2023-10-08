@@ -39,10 +39,10 @@ void call(Map pipelineParams) {
             }
         }
 
-        // post {
-        //     cleanup {
-        //         cleanWs()
-        //     }
-        // }
+        post {
+            cleanup {
+                cleanWs()
+            }
+        }
     }
 }

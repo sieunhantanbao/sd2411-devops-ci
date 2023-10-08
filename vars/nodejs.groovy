@@ -32,7 +32,7 @@ void call() {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acrcredential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             docker.withRegistry("https://${dockerRegistry}", 'acrcredential' ) {
                 sh "docker login ${dockerRegistry} -u ${USERNAME} -p ${PASSWORD}"
-                sh "docker push ${dockerRegistry}/${backend}/${name}:${BUILD_NUMBER}"
+                sh "docker push ${dockerRegistry}/${backend}:${BUILD_NUMBER}"
             }
         }
     }
@@ -41,9 +41,13 @@ void call() {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'acrcredential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             docker.withRegistry("https://${dockerRegistry}", 'acrcredential' ) {
                 sh "docker login ${dockerRegistry} -u ${USERNAME} -p ${PASSWORD}"
-                sh "docker push ${dockerRegistry}/${frontend}/${name}:${BUILD_NUMBER}"
+                sh "docker push ${dockerRegistry}/${frontend}:${BUILD_NUMBER}"
             }
         }
+    }
+    stage ("Clean up docker images") {
+       sh "docker rmi ${dockerRegistry}/${backend}:${BUILD_NUMBER}"
+       sh "docker rmi ${dockerRegistry}/${frontend}:${BUILD_NUMBER}"
     }
 }
 
