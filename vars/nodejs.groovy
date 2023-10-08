@@ -29,7 +29,7 @@ void call() {
     }
 
     stage ("Push Docker Images to ACR - backend") {
-        withCredentials([[$class: 'ACRCredential', credentialsId: acrCredential, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACRCredential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             docker.withRegistry("https://${dockerRegistry}", acrCredential ) {
                 sh "docker login ${dockerRegistry} -u ${USERNAME} -p ${PASSWORD}"
                 sh "docker push ${dockerRegistry}/${backend}/${name}:${BUILD_NUMBER}"
@@ -38,7 +38,7 @@ void call() {
     }
 
     stage ("Push Docker Images to ACR - frontend") {
-        withCredentials([[$class: 'ACRCredential', credentialsId: acrCredential, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACRCredential', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             docker.withRegistry("https://${dockerRegistry}", acrCredential ) {
                 sh "docker login ${dockerRegistry} -u ${USERNAME} -p ${PASSWORD}"
                 sh "docker push ${dockerRegistry}/${frontend}/${name}:${BUILD_NUMBER}"
