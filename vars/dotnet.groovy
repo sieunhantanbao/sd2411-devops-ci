@@ -16,14 +16,14 @@ void call() {
     //     }
     // }
 
-    stage ("Build Backend") {
-        dir("./backend"){
+    stage ("Build Backend API") {
+        dir("./src/ContainerApp.TodoApi"){
             docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f Dockerfile .")
         }
     }
 
     stage ("Build Frontend") {
-        dir("./frontend"){
+        dir("./src/ContainerApp.WebApp"){
             docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f Dockerfile .")
         }
     }

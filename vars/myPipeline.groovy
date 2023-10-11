@@ -33,7 +33,7 @@ void call(Map pipelineParams) {
                 }
                 steps {
                     script {
-                        nodejs()
+                        dotnet()
                     }
                 }
             }
