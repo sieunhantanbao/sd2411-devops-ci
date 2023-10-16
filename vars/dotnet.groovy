@@ -16,6 +16,10 @@ void call() {
     //     }
     // }
 
+    // TODO: Add Security check
+    // TODO: Scan unit test and report
+    // TODO: Scan Sonarq and report
+
     stage ("Build Backend API") {
         dir("./src/ContainerApp.TodoApi"){
             docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f Dockerfile .")
@@ -52,7 +56,7 @@ void call() {
 }
 
 //========================================================================
-// Demo CI
+// SD2411_MSA CI
 // Version: v1.0
 // Updated:
 //========================================================================
