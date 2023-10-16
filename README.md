@@ -14,9 +14,10 @@ Welcome to the SD2411 DEVOPS Continues Integration (CI) repository. This reposit
 #### TBD
 
 ## Demonstration
-- Push the change to the master branch of the [SD2411_MSA Repository](https://github.com/sieunhantanbao/sd2411_msa)
-TBD
+- Push the change to the master branch of the [SD2411_MSA Repository](https://github.com/sieunhantanbao/sd2411_msa)<br/>
+![image info](./images/git_push_main_branch.png)
 - Jenkins job/pipeline is automatically triggered
-TBD
+![image info](./images/jenkins_is_triggered.png)
 - The build artifacts (docker images) are pushed to the ACR
-TBD
+![image info](./images/acr_backend.PNG)
+![image info](./images/acr_frontend.PNG)
