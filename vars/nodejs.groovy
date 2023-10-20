@@ -9,25 +9,50 @@ void call() {
 //========================================================================
 //========================================================================
 
-    // stage ('Copy Dockerfiles to the source') {
-    //     script {
-    //         writeFile file: 'backend/Dockerfile.Backend', text: libraryResource('dev/docker/Dockerfile.Backend')
-    //         writeFile file: 'frontend/Dockerfile.Frontend', text: libraryResource('dev/docker/Dockerfile.Frontend')
-    //     }
-    // }
+    stage ('Prepare packages') {
+        script {
+            writeFile file: '.ci/trivy_report.tpl', text: libraryResource('templates/trivy_report.tpl')
+        }
+    }
 
-    // TODO: Add Security check
+    stage ("Trivy Scan secret") {
+        script {
+            sh "trivy fs . --scanners secret --exit-code 0 --format template --template @.ci/trivy_report.tpl -o .ci/secretreport.html"
+            publishHTML(target: [allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '.ci',
+                reportFiles: 'secretreport.html',
+                reportName: 'Trivy Secret Report',
+                reportTitles:  'Trivy Secret Report'
+            ])
+        }
+    }
+    stage ("Trivy Scan Vulnerabilities") {
+        script {
+            sh "trivy fs . --severity HIGH,CRITICAL --scanners vuln --exit-code 0 --format template --template @.ci/trivy_report.tpl -o .ci/vulnreport.html"
+            publishHTML(target: [allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '.ci',
+                reportFiles: 'vulnreport.html',
+                reportName: 'Trivy Vulnerabilities Report',
+                reportTitles:  'Trivy Vulnerabilities Report'
+            ])
+        }
+    }
     // TODO: Scan unit test and report
+    
     // TODO: Scan Sonarq and report
 
-    stage ("Build Backend API") {
-        dir("./src/ContainerApp.TodoApi"){
+    stage ("Build Backend") {
+        dir("./src/backend"){
             docker.build("${dockerRegistry}/${backend}:${BUILD_NUMBER}", "--force-rm --no-cache -f Dockerfile .")
         }
     }
 
-    stage ("Build Frontend") {
-        dir("./src/ContainerApp.WebApp"){
+    stage ("Build Backend") {
+        dir("./src/frontend"){
             docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f Dockerfile .")
         }
     }
