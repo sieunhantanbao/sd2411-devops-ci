@@ -41,9 +41,6 @@ void call() {
             ])
         }
     }
-    // TODO: Scan unit test and report
-    
-    // TODO: Scan Sonarq and report
 
     stage ("Build Backend") {
         dir("./src/backend"){
@@ -51,7 +48,7 @@ void call() {
         }
     }
 
-    stage ("Build Backend") {
+    stage ("Build Frontend") {
         dir("./src/frontend"){
             docker.build("${dockerRegistry}/${frontend}:${BUILD_NUMBER}", "--force-rm --no-cache -f Dockerfile .")
         }
