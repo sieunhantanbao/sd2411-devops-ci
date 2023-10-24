@@ -1,4 +1,12 @@
 # SD2411 DEVOPS CI
+## Reference Repositories
+| Repository | Description |
+|--|--|
+|[sd2411_msa](https://github.com/sieunhantanbao/sd2411_msa)|**Application source code**. This contain a backend, frontend and use the mongo as database|
+|[sd2411_devops_ci](https://github.com/sieunhantanbao/sd2411-devops-ci)|This contains the **Jenkins Groovy files** (Jenkins Shared Library). When the [sd2411_msa](https://github.com/sieunhantanbao/sd2411_msa) has changed the source code, it will call the Jenkins files in this repo to build the source code (CI process)|
+|[sd2411_helm_charts](https://github.com/sieunhantanbao/sd2411-helm-charts)|This contains the **helm charts** definition and helm chart packages (manifest) to deploy the apps from the [sd2411_msa](https://github.com/sieunhantanbao/sd2411_msa)|
+|[sd2411_azure_infrastructure](https://github.com/sieunhantanbao/sd2411_azure_infrastructure)|**Ops source code**. This contains the infrastructure as code (iac) to provision the Azure resources with terraform. This also handles the Continue Deployment (CD) with ArgoCD|
+
 ## Overview
 Welcome to the SD2411 DEVOPS Continues Integration (CI) repository. This repository contains the Jenkins Groovy files to get, build the source code from the [SD2411_MSA Repository](https://github.com/sieunhantanbao/sd2411_msa) and then push the artifacts (docker images) to Azure Container Registry (ACR). The Continues Deployment (CD) process will be handled in the [SD2411 Azure Infrastructure Repository](https://github.com/sieunhantanbao/sd2411_azure_infrastructure).
 
